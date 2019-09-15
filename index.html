@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Vue.js App</title>
+    <!-- <link rel="stylesheet" href="main.css"> -->
+  </head>
+  <body>
+    <div id="app">
+      <h1>todo list</h1>
+      
+      <label v-for="label in options">
+        <input name="filter" type="radio"
+               v-model="current"
+               v-bind:value="label.value" />
+        {{ label.label }}
+      </label>
+      
+      <p>count: {{ computedTodos.length }}</p>
+      
+      <h2>Add todo</h2>
+      <form class="add-form" v-on:submit.prevent="doAdd">
+        comment <input name="comment" type="text" ref="comment"/>
+        <button type="submit">Add</button>
+      </form>
+      
+      <h2>Todos</h2>
+      <table>
+        <thead v-pre>
+          <tr>
+            <th class="id">id</th>
+            <th class="comment">comment</th>
+            <th class="state">status</th>
+            <th class="button">-</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+              v-for="item in computedTodos"
+              :key="item.id"
+              v-bind:class="{done:item.state}">
+            <th>{{ item.id }}</th>
+            <td>{{ item.comment }}</td>
+            <td class="state">
+              <button v-on:click="doChangeState(item)">
+                {{ labels[item.state] }}
+              </button>
+            </td>
+            <td class="button">
+              <button v-on:click.ctrl="doRemove(item)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>*how to delete: must click with press ctrl key</p>
+      
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>
